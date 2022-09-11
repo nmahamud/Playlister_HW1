@@ -18,6 +18,7 @@ export default class PlaylisterView {
     init() {
         // @todo - ONCE YOU IMPLEMENT THE FOOLPROOF DESIGN STUFF YOU SHOULD PROBABLY
         // START THESE BUTTONS OFF AS DISABLED
+        this.enableButton('add-song-button');
         this.enableButton('undo-button');
         this.enableButton('redo-button');
         this.enableButton('close-button');
@@ -112,11 +113,15 @@ export default class PlaylisterView {
             itemDiv.classList.add("list-card");
             itemDiv.classList.add("unselected-list-card");
             itemDiv.id = "playlist-card-" + (i + 1);
+            let a = document.createElement('a');
 
             // PUT THE CONTENT INTO THE CARD
-            let itemText = document.createTextNode(song.title + " by " + song.artist);
-            itemDiv.appendChild(itemText);
-
+            let itemText = document.createTextNode((i+1) + ". " + song.title + " by " + song.artist);
+            a.appendChild(itemText);
+            a.title = (i+1) + ". " + song.title + " by " + song.artist;
+            a.href = "https://youtube.com/watch?v="+playlist.songs[i].youTubeId;
+            itemDiv.appendChild(a);
+            
             // AND PUT THE CARD INTO THE UI
             itemsDiv.appendChild(itemDiv);
         }
