@@ -121,7 +121,11 @@ export default class PlaylisterView {
             a.title = (i+1) + ". " + song.title + " by " + song.artist;
             a.href = "https://youtube.com/watch?v="+playlist.songs[i].youTubeId;
             itemDiv.appendChild(a);
-            
+            let button = document.createElement('button');
+            button.innerText = 'X';
+            button.id = "remove-song-button-" + i;
+            button.className = "list-card-button";
+            itemDiv.appendChild(button);
             // AND PUT THE CARD INTO THE UI
             itemsDiv.appendChild(itemDiv);
         }

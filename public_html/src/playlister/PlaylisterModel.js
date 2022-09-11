@@ -1,6 +1,8 @@
 import jsTPS from "../common/jsTPS.js";
 import Playlist from "./Playlist.js";
+import AddSong_Transaction from "./transactions/AddSong_Transaction.js";
 import MoveSong_Transaction from "./transactions/MoveSong_Transaction.js";
+import RemoveSong_Transaction from "./transactions/RemoveSong_Transaction.js";
 
 /**
  * PlaylisterModel.js
@@ -82,6 +84,14 @@ export default class PlaylisterModel {
 
     setDeleteListId(initId) {
         this.deleteListId = initId;
+    }
+
+    getDeleteSongId() {
+        return this.deleteSongId;
+    }
+
+    setDeleteSongId(initId) {
+        this.deleteSongId = initId;
     }
 
     toggleConfirmDialogOpen() {
@@ -244,10 +254,23 @@ export default class PlaylisterModel {
         this.saveLists();
     }
 
-    addSong(){
+    addSong() {
         if (this.hasCurrentList()) {
             let newSong = {title: 'Untitled', artist: 'Unknown', youTubeId: 'dQw4w9WgXcQ'};
             this.currentList.songs.push(newSong);
+            this.view.refreshPlaylist(this.currentList);
+        }
+        this.saveLists();
+    }
+
+    removeSong(index) {
+        if (this.hasCurrentList()) {
+            if (index == -1) {
+                this.currentList.songs.pop();
+            }
+            else {
+                this.currentList.songs.splice(index, 1);
+            }
             this.view.refreshPlaylist(this.currentList);
         }
         this.saveLists();
@@ -278,7 +301,15 @@ export default class PlaylisterModel {
         this.view.updateToolbarButtons(this);
     }
 
-    addSongTransaction(){
+    addSongTransaction() {
+        let transaction = new AddSong_Transaction(this);
+        this.tps.addTransaction(transaction);
+        this.view.updateToolbarButtons(this);
+    }
 
+    removeSongTransaction(index) {
+        let transaction = new RemoveSong_Transaction(this, index);
+        this.tps.addTransaction(transaction);
+        this.view.updateToolbarButtons(this);
     }
 }

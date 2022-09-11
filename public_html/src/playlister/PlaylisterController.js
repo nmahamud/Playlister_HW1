@@ -53,7 +53,7 @@ export default class PlaylisterController {
         }
         // HANDLER FOR ADD BUTTON
         document.getElementById("add-song-button").onmousedown = (event) => {
-            this.model.addSong()
+            this.model.addSongTransaction()
         }
         // HANDLER FOR UNDO BUTTON
         document.getElementById("undo-button").onmousedown = (event) => {
@@ -106,6 +106,26 @@ export default class PlaylisterController {
             let deleteListModal = document.getElementById("delete-list-modal");
             deleteListModal.classList.remove("is-visible");
         }
+
+        // RESPOND TO THE USER CONFIRMING TO REMOVING A SONG
+        let removeSongConfirmButton = document.getElementById("delete-song-confirm-button");
+        removeSongConfirmButton.onclick = (event) => {
+            let removeSongIndex = this.model.getDeleteSongId();
+            this.model.removeSongTransaction(removeSongIndex);
+            this.model.toggleConfirmDialogOpen();
+            let deleteSongModal = document.getElementById("delete-song-modal");
+            deleteSongModal.classList.remove("is-visible");
+        }
+        
+        let deleteSongCancelButton = document.getElementById("delete-song-cancel-button");
+        deleteSongCancelButton.onclick = (event) => {
+            // ALLOW OTHER INTERACTIONS
+            this.model.toggleConfirmDialogOpen();
+            
+            // CLOSE THE MODAL
+            let deleteSongModal = document.getElementById("delete-song-modal");
+            deleteSongModal.classList.remove("is-visible");
+        } 
     }
 
     /*
@@ -240,6 +260,20 @@ export default class PlaylisterController {
                     && !isNaN(toIndex)) {
                     this.model.addMoveSongTransaction(fromIndex, toIndex);
                 }
+            }
+
+            let removeButton = document.getElementById("remove-song-button-" + i);
+            removeButton.onmousedown = (event) => {
+                let songName = this.model.currentList.songs[i].title;
+                this.model.setDeleteSongId(i);
+                let deleteSongSpan = document.getElementById("delete-song-span");
+                deleteSongSpan.innerHTML = "";
+                deleteSongSpan.appendChild(document.createTextNode(songName));
+                let deleteSongModal = document.getElementById("delete-song-modal");
+
+                // OPEN UP THE DIALOG
+                deleteSongModal.classList.add("is-visible");
+                this.model.toggleConfirmDialogOpen();
             }
         }
     }
