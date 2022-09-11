@@ -206,6 +206,12 @@ export default class PlaylisterView {
             this.disableButton("redo-button");
             this.disableButton("close-button");
         }
+        else {
+            this.enableButton("add-list-button");
+            this.enableButton("undo-button");
+            this.enableButton("redo-button");
+            this.enableButton("close-button");
+        }
     }
 
     /*

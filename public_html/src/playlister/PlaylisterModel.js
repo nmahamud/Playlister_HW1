@@ -244,6 +244,15 @@ export default class PlaylisterModel {
         this.saveLists();
     }
 
+    addSong(){
+        if (this.hasCurrentList()) {
+            let newSong = {title: 'Untitled', artist: 'Unknown', youTubeId: 'dQw4w9WgXcQ'};
+            this.currentList.songs.push(newSong);
+            this.view.refreshPlaylist(this.currentList);
+        }
+        this.saveLists();
+    }
+
     // SIMPLE UNDO/REDO FUNCTIONS, NOTE THESE USE TRANSACTIONS
 
     undo() {
@@ -267,5 +276,9 @@ export default class PlaylisterModel {
         let transaction = new MoveSong_Transaction(this, fromIndex, onIndex);
         this.tps.addTransaction(transaction);
         this.view.updateToolbarButtons(this);
+    }
+
+    addSongTransaction(){
+
     }
 }

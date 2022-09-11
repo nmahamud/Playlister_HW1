@@ -71,6 +71,44 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL (i.e. dialog) FOR VERIFYING THE DELETION OF A SONG -->
+        <div class="modal" id="delete-song-modal" data-animation="slideInOutLeft">
+            <div class="modal-root" id='verify-delete-song-root'>
+                <div class="modal-north">
+                    Remove song?
+                </div>                
+                <div class="modal-center">
+                    <div class="modal-center-content">
+                        Are you sure you wish to permanently remove <span id="delete-song-span"></span> from the playlist?
+                    </div>
+                </div>
+                <div class="modal-south">
+                    <input type="button" id="delete-song-confirm-button" class="modal-button" value='Confirm' />
+                    <input type="button" id="delete-song-cancel-button" class="modal-button" value='Cancel' />
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL FOR ADDING A NEW SONG -->
+        <!-- <div class="modal" id="add-song-modal" data-animation="slideInOutLeft">
+            <div class="modal-root" id='get-song-info'>
+                <div class="modal-north">
+                    Edit song
+                </div>
+                <div class="modal-center">
+                    <div class="modal-center-content">
+                        <label for="title-input">Title: </label> <input type="text" id="title-input" class="modal-text" value='Untitled' />
+                        <label for="artist-input">Artist: </label> <input type="text" id="artist-input" class="modal-text" value='Unknown' />
+                        <label for="youtube-input">YouTube Id: </label> <input type="text" id="youtube-input" class="modal-text" value='dQw4w9WgXcQ' />
+                    </div>
+                </div>
+                <div class="modal-south">
+                    <input type="button" id="add-song-confirm-button" class="modal-button" value='Confirm' />
+                    <input type="button" id="add-song-cancel-button" class="modal-button" value='Cancel' />
+                </div>
+            </div>
+        </div> -->
     </div>
 </body>
 

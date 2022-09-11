@@ -51,6 +51,10 @@ export default class PlaylisterController {
             this.model.loadList(newList.id);
             this.model.saveLists();
         }
+        // HANDLER FOR ADD BUTTON
+        document.getElementById("add-song-button").onmousedown = (event) => {
+            this.model.addSong()
+        }
         // HANDLER FOR UNDO BUTTON
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
@@ -101,7 +105,7 @@ export default class PlaylisterController {
             // CLOSE THE MODAL
             let deleteListModal = document.getElementById("delete-list-modal");
             deleteListModal.classList.remove("is-visible");
-        }        
+        }
     }
 
     /*
