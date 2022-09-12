@@ -1,6 +1,6 @@
 import jsTPS_Transaction from "../../common/jsTPS.js"
 /**
- * RemoveSong_Transaction
+ * AddSong_Transaction
  * 
  * This class represents a transaction that works with removing 
  * a song. It will be managed by the transaction stack.
@@ -8,19 +8,20 @@ import jsTPS_Transaction from "../../common/jsTPS.js"
  * @author McKilla Gorilla
  * @author Nazif Mahamud
  */
-export default class RemoveSong_Transaction extends jsTPS_Transaction {
-    constructor(initModel, initIndex, songInfo) {
+export default class EditSong_Transaction extends jsTPS_Transaction {
+    constructor(initModel, initIndex, oldSongInfo, newSongInfo) {
         super();
         this.model = initModel;
         this.index = initIndex;
-        this.songInfo = songInfo;
+        this.oldSongInfo = oldSongInfo;
+        this.newSongInfo = newSongInfo;
     }
 
     doTransaction() {
-        this.model.removeSong(this.index);
+        this.model.editSong(this.index,this.newSongInfo);
     }
     
     undoTransaction() {
-        this.model.addSongAtIndex(this.index, this.songInfo);
+        this.model.editSong(this.index, this.oldSongInfo);
     }
 }

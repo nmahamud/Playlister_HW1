@@ -4,7 +4,7 @@
  * This class provides responses for all user interface interactions.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Nazif Mahamud
  */
 export default class PlaylisterController {
     constructor() { }
@@ -273,6 +273,15 @@ export default class PlaylisterController {
 
                 // OPEN UP THE DIALOG
                 deleteSongModal.classList.add("is-visible");
+                this.model.toggleConfirmDialogOpen();
+            }
+            card.ondblclick = (event) => {
+                let song = this.model.currentList.songs[i];
+                document.getElementById('title-input').value = song.title;
+                document.getElementById('artist-input').value = song.artist;
+                document.getElementById('youtube-input').value = song.youTubeId;
+                let editsongModal = document.getElementById("edit-song-modal");
+                editsongModal.classList.add("is-visible");
                 this.model.toggleConfirmDialogOpen();
             }
         }

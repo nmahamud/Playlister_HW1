@@ -5,7 +5,7 @@
  * for loading data into our controls and building other UI controls.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Nazif Mahamud
  */
 export default class PlaylisterView {
     constructor() {}

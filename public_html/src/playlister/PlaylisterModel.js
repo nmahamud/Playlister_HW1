@@ -3,6 +3,7 @@ import Playlist from "./Playlist.js";
 import AddSong_Transaction from "./transactions/AddSong_Transaction.js";
 import MoveSong_Transaction from "./transactions/MoveSong_Transaction.js";
 import RemoveSong_Transaction from "./transactions/RemoveSong_Transaction.js";
+import EditSong_Transaction from "./transactions/EditSong_Transaction.js";
 
 /**
  * PlaylisterModel.js
@@ -17,7 +18,7 @@ import RemoveSong_Transaction from "./transactions/RemoveSong_Transaction.js";
  * inside the view of the page.
  * 
  * @author McKilla Gorilla
- * @author ?
+ * @author Nazif Mahamud
  */
 export default class PlaylisterModel {
     /*
@@ -92,6 +93,14 @@ export default class PlaylisterModel {
 
     setDeleteSongId(initId) {
         this.deleteSongId = initId;
+    }
+
+    getEditSongIndex() {
+        return this.editSongIndex;
+    }
+
+    setEditSongIndex(initIndex) {
+        this.editSongIndex = initIndex;
     }
 
     toggleConfirmDialogOpen() {
@@ -284,6 +293,14 @@ export default class PlaylisterModel {
         this.saveLists();
     }
 
+    editSong(index, newSongInfo) {
+        if (this.hasCurrentList()) {
+            this.currentList.songs[index] = newSongInfo;
+            this.view.refreshPlaylist(this.currentList);
+        }
+        this.saveLists();
+    }
+
     // SIMPLE UNDO/REDO FUNCTIONS, NOTE THESE USE TRANSACTIONS
 
     undo() {
@@ -317,6 +334,12 @@ export default class PlaylisterModel {
 
     removeSongTransaction(index) {
         let transaction = new RemoveSong_Transaction(this, index, this.currentList.songs[index]);
+        this.tps.addTransaction(transaction);
+        this.view.updateToolbarButtons(this);
+    }
+
+    addEditSongTransaction(index, newSongInfo) {
+        let transaction = new EditSong_Transaction(this, index, this.currentList.songs[index], newSongInfo);
         this.tps.addTransaction(transaction);
         this.view.updateToolbarButtons(this);
     }
