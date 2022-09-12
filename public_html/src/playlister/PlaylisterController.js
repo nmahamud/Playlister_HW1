@@ -58,15 +58,18 @@ export default class PlaylisterController {
         // HANDLER FOR UNDO BUTTON
         document.getElementById("undo-button").onmousedown = (event) => {
             this.model.undo();
+            this.model.view.updateUndoRedo(this.model);
         }
         // HANDLER FOR REDO BUTTON
         document.getElementById("redo-button").onmousedown = (event) => {
             this.model.redo();
+            this.model.view.updateUndoRedo(this.model);
         }
         // HANDLER FOR CLOSE LIST BUTTON
         document.getElementById("close-button").onmousedown = (event) => {
             this.model.unselectAll();
             this.model.unselectCurrentList();
+            this.model.toggleEditingList();
         }
     }
 

@@ -18,10 +18,10 @@ export default class PlaylisterView {
     init() {
         // @todo - ONCE YOU IMPLEMENT THE FOOLPROOF DESIGN STUFF YOU SHOULD PROBABLY
         // START THESE BUTTONS OFF AS DISABLED
-        this.enableButton('add-song-button');
-        this.enableButton('undo-button');
-        this.enableButton('redo-button');
-        this.enableButton('close-button');
+        this.disableButton('add-song-button');
+        this.disableButton('undo-button');
+        this.disableButton('redo-button');
+        this.disableButton('close-button');
     }
 
     /*
@@ -206,16 +206,38 @@ export default class PlaylisterView {
         let tps = model.tps;
         if (model.confirmDialogOpen) {
             this.disableButton("add-list-button");
+            this.disableButton("add-song-button");
             this.disableButton("undo-button");
             this.disableButton("redo-button");
             this.disableButton("close-button");
         }
         else {
-            this.enableButton("add-list-button");
-            this.enableButton("undo-button");
-            this.enableButton("redo-button");
-            this.enableButton("close-button");
+            if (!model.hasCurrentList()) {
+                this.enableButton("add-list-button");
+                this.disableButton("add-song-button");
+                this.disableButton("undo-button");
+                this.disableButton("redo-button");
+                this.disableButton("close-button");
+            }
+            else {
+                this.disableButton("add-list-button");
+                this.enableButton("add-song-button");
+                this.updateUndoRedo(model);
+                this.enableButton("close-button");
+                
+            }
         }
+    }
+
+    updateUndoRedo(model) {
+        if (model.tps.hasTransactionToRedo())
+            this.enableButton("redo-button");
+        else 
+            this.disableButton("redo-button");
+        if (model.tps.hasTransactionToUndo())
+            this.enableButton("undo-button");
+        else
+            this.disableButton("undo-button");
     }
 
     /*

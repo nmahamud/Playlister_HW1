@@ -109,6 +109,11 @@ export default class PlaylisterModel {
         return this.confirmDialogOpen;
     }
 
+    toggleEditingList() {
+        this.currentList = null;
+        this.view.updateToolbarButtons(this);
+    }
+
     // THESE ARE THE FUNCTIONS FOR MANAGING ALL THE LISTS
 
     addNewList(initName, initSongs) {
