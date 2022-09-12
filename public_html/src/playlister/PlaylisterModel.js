@@ -293,9 +293,11 @@ export default class PlaylisterModel {
         this.saveLists();
     }
 
-    editSong(index, newSongInfo) {
+    editSong(index, newSongTitle, newSongArtist, newSongID) {
         if (this.hasCurrentList()) {
-            this.currentList.songs[index] = newSongInfo;
+            this.currentList.songs[index].title = newSongTitle;
+            this.currentList.songs[index].artist = newSongArtist;
+            this.currentList.songs[index].youTubeId = newSongID;
             this.view.refreshPlaylist(this.currentList);
         }
         this.saveLists();
@@ -338,8 +340,8 @@ export default class PlaylisterModel {
         this.view.updateToolbarButtons(this);
     }
 
-    addEditSongTransaction(index, newSongInfo) {
-        let transaction = new EditSong_Transaction(this, index, this.currentList.songs[index], newSongInfo);
+    addEditSongTransaction(index, newSongTitle, newSongArtist, newSongID) {
+        let transaction = new EditSong_Transaction(this, index, this.currentList.songs[index], newSongTitle, newSongArtist, newSongID);
         this.tps.addTransaction(transaction);
         this.view.updateToolbarButtons(this);
     }

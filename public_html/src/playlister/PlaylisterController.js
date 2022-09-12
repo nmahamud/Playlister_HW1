@@ -126,6 +126,26 @@ export default class PlaylisterController {
             let deleteSongModal = document.getElementById("delete-song-modal");
             deleteSongModal.classList.remove("is-visible");
         } 
+        
+        // RESPOND TO THE USER EDITING A SONG
+        let editSongConfirmButton = document.getElementById("edit-song-confirm-button");
+        editSongConfirmButton.onclick = (event) => {
+            let editSongIndex = this.model.getEditSongIndex();
+            let newSongTitle = document.getElementById('title-input').value;
+            let newSongArtist = document.getElementById('artist-input').value;
+            let newSongID = document.getElementById('youtube-input').value;
+            this.model.addEditSongTransaction(editSongIndex, newSongTitle, newSongArtist, newSongID);
+            this.model.toggleConfirmDialogOpen();
+            let editsongModal = document.getElementById("edit-song-modal");
+            editsongModal.classList.remove("is-visible");
+        }
+
+        let editSongCancelButton = document.getElementById("edit-song-cancel-button");
+        editSongCancelButton.onclick = (event) => {
+            this.model.toggleConfirmDialogOpen();
+            let editsongModal = document.getElementById("edit-song-modal");
+            editsongModal.classList.remove("is-visible");
+        }
     }
 
     /*
@@ -277,6 +297,7 @@ export default class PlaylisterController {
             }
             card.ondblclick = (event) => {
                 let song = this.model.currentList.songs[i];
+                this.model.setEditSongIndex(i);
                 document.getElementById('title-input').value = song.title;
                 document.getElementById('artist-input').value = song.artist;
                 document.getElementById('youtube-input').value = song.youTubeId;
