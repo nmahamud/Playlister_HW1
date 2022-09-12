@@ -263,6 +263,14 @@ export default class PlaylisterModel {
         this.saveLists();
     }
 
+    addSongAtIndex(index, info) {
+        if (this.hasCurrentList()) {
+            this.currentList.songs.splice(index, 0, info);
+            this.view.refreshPlaylist(this.currentList);
+        }
+        this.saveLists();
+    }
+
     removeSong(index) {
         if (this.hasCurrentList()) {
             if (index == -1) {
@@ -308,7 +316,7 @@ export default class PlaylisterModel {
     }
 
     removeSongTransaction(index) {
-        let transaction = new RemoveSong_Transaction(this, index);
+        let transaction = new RemoveSong_Transaction(this, index, this.currentList.songs[index]);
         this.tps.addTransaction(transaction);
         this.view.updateToolbarButtons(this);
     }
